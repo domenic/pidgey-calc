@@ -79,6 +79,7 @@ h1 {
 #outputs {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
 }
 
 #leftover-container {
@@ -96,13 +97,23 @@ h1 {
 </div>
 
 <p>
-  <input type="checkbox" id="double">
-  <label for="double">Double candy event</label>
+  <input type="checkbox" id="transfer" checked>
+  <label for="transfer">Transfer after evolving</label>
 </p>
 
 <p>
-  <input type="checkbox" id="transfer" checked>
-  <label for="transfer">Transfer after evolving</label>
+  <input type="checkbox" id="lucky-egg" checked>
+  <label for="lucky-egg">Lucky egg</label>
+</p>
+
+<p>
+  <input type="checkbox" id="double-xp" checked>
+  <label for="double-xp">Double XP event</label>
+</p>
+
+<p>
+  <input type="checkbox" id="double-candy">
+  <label for="double-candy">Double candy event</label>
 </p>
 
 <div id="output-container" hidden>
@@ -118,6 +129,11 @@ h1 {
       <label for="leftover">Leftover candy</label>
       <output id="leftover"></output>
     </p>
+
+    <p id="xp-container">
+      <label for="xp">XP gain</label>
+      <output id="xp"></output>
+    </p>
   </div>
 </div>
 
@@ -127,24 +143,36 @@ h1 {
   const CANDY_TO_EVOLVE = 12;
   const CANDY_FROM_EVOLVING = 1;
   const CANDY_FROM_TRANSFERRING = 1;
+  const XP_FROM_EVOLVING = 500;
 
   const candyEl = document.querySelector("#candy");
   const candyLabelEl = document.querySelector("[for=\"candy\"]");
-  const doubleEl = document.querySelector("#double");
+  const doubleCandyEl = document.querySelector("#double-candy");
+  const doubleXPEl = document.querySelector("#double-xp");
+  const luckyEggEl = document.querySelector("#lucky-egg");
   const transferEl = document.querySelector("#transfer");
   const neededEl = document.querySelector("#needed");
   const leftoverEl = document.querySelector("#leftover");
+  const xpEl = document.querySelector("#xp");
   const outputContainerEl = document.querySelector("#output-container");
 
+  const numberFormat = new Intl.NumberFormat();
+
   candyEl.addEventListener("input", recalculate);
-  doubleEl.addEventListener("change", recalculate);
+  doubleCandyEl.addEventListener("change", recalculate);
+  doubleXPEl.addEventListener("change", recalculate);
+  luckyEggEl.addEventListener("change", recalculate);
   transferEl.addEventListener("change", recalculate);
+
+  hookUpLabelAndInput(candyLabelEl, candyEl);
+  recalculate();
 
   function recalculate() {
     let pidgeysEvolved = 0;
     let candyLeft = candyEl.valueAsNumber;
-    let doTransfer = transferEl.checked;
-    const doubleMultiplier = doubleEl.checked ? 2 : 1;
+    const doTransfer = transferEl.checked;
+    const doubleCandyMultiplier = doubleCandyEl.checked ? 2 : 1;
+    const xpMultiplier = 1 * (doubleXPEl.checked ? 2 : 1) * (luckyEggEl.checked ? 2 : 1);
 
     if (Number.isNaN(candyLeft)) {
       outputContainerEl.hidden = true;
@@ -157,19 +185,18 @@ h1 {
       ++pidgeysEvolved;
 
       candyLeft -= CANDY_TO_EVOLVE;
-      candyLeft += CANDY_FROM_EVOLVING * doubleMultiplier;
+      candyLeft += CANDY_FROM_EVOLVING * doubleCandyMultiplier;
       if (doTransfer) {
-        candyLeft += CANDY_FROM_TRANSFERRING * doubleMultiplier;
+        candyLeft += CANDY_FROM_TRANSFERRING * doubleCandyMultiplier;
       }
     }
 
     neededEl.value = pidgeysEvolved;
     leftoverEl.value = candyLeft;
+    xpEl.value = numberFormat.format(XP_FROM_EVOLVING * xpMultiplier * pidgeysEvolved);
   }
 
   // Materialize shim instead of pulling in all the JavaScript
-  hookUpLabelAndInput(candyLabelEl, candyEl);
-
   function hookUpLabelAndInput(label, input) {
     input.addEventListener("change", () => label.classList.add("active"));
     input.addEventListener("focusin", () => label.classList.add("active"));
