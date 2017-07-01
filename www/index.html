@@ -168,12 +168,20 @@ h1 {
   }
 
   // Materialize shim instead of pulling in all the JavaScript
-  candyEl.addEventListener("focusin", () => candyLabelEl.classList.add("active"));
-  candyEl.addEventListener("focusout", () => {
-    if (Number.isNaN(candyEl.valueAsNumber)) {
-      candyLabelEl.classList.remove("active");
-    }
-  });
+  hookUpLabelAndInput(candyLabelEl, candyEl);
+
+  function hookUpLabelAndInput(label, input) {
+    input.addEventListener("change", () => label.classList.add("active"));
+    input.addEventListener("focusin", () => label.classList.add("active"));
+    input.addEventListener("focusout", () => {
+      if (Number.isNaN(input.valueAsNumber)) {
+        label.classList.remove("active");
+      }
+    });
+
+    // On startup it might have a value from last time, especially in Firefox
+    label.classList.toggle("active", !Number.isNaN(input.valueAsNumber));
+  }
 
   if (navigator.serviceWorker) {
     navigator.serviceWorker.register("service-worker.js");
