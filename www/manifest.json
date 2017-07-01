@@ -1,0 +1,64 @@
+{
+  "name": "Pidgey Calculator",
+  "short_name": "Pidgey Calc",
+  "description": "Calculates how many Pidgeys you need for your next evolution spree.",
+  "display": "standalone",
+  "background_color": "white",
+  "theme_color": "rgb(221, 158, 105)",
+  "orientation": "portrait",
+  "start_url": "/",
+  "lang": "en",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "icons/pidgey.svg",
+      "sizes": "any",
+      "type": "image/svg"
+    },
+    {
+      "src": "icons/pidgey-48.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/pidgey-72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/pidgey-96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/pidgey-144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/pidgey-168.png",
+      "sizes": "168x168",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/pidgey-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/pidgey-256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+     {
+      "src": "icons/pidgey-384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+   {
+      "src": "icons/pidgey-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

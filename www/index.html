@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Pidgey Calculator</title>
+
+<link rel="author" href="mailto:d@domenic.me" title="Domenic Denicola">
+<meta name="theme-color" content="rgb(221, 158, 105)">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
+<link rel="manifest" href="manifest.json">
+
+<link rel="icon" type="image/svg" href="icons/pidgey.svg" sizes="any">
+<link rel="icon" type="image/svg" href="icons/pidgey-48.png" sizes="48x48">
+<link rel="icon" type="image/svg" href="icons/pidgey-72.png" sizes="72x72">
+<link rel="icon" type="image/svg" href="icons/pidgey-96.png" sizes="96x96">
+<link rel="icon" type="image/svg" href="icons/pidgey-144.png" sizes="144x144">
+<link rel="icon" type="image/svg" href="icons/pidgey-168.png" sizes="168x168">
+<link rel="icon" type="image/svg" href="icons/pidgey-192.png" sizes="192x192">
+<link rel="icon" type="image/svg" href="icons/pidgey-256.png" sizes="256x256">
+<link rel="icon" type="image/svg" href="icons/pidgey-384.png" sizes="384x384">
+<link rel="icon" type="image/svg" href="icons/pidgey-512.png" sizes="512x512">
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+html {
+  --theme-color: rgb(221, 158, 105);
+  --header-height: 56px;
+  --side-margin: 10%;
+
+  background: url(icons/background.svg);
+  background-size: contain;
+  width: 100vw;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-position: center calc(var(--header-height) + 80px);
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+}
+
+body {
+  margin: 0 auto;
+  padding: 0;
+  width: calc(100% - 2 * var(--side-margin));
+  margin-top: calc(var(--header-height) + 50px);
+}
+
+label {
+  display: block;
+}
+
+h1 {
+  height: var(--header-height);
+  line-height: var(--header-height);
+  font-weight: normal;
+  position: absolute;
+  color: white;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  font-size: 2.1rem;
+
+  margin: 0;
+  padding: 0 var(--side-margin);
+  background-color: var(--theme-color);
+}
+
+
+#candy-container {
+  text-align: center;
+}
+
+#outputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+#leftover-container {
+  text-align: right;
+}
+</style>
+
+<h1>Pidgey&nbsp;Calculator</h1>
+
+<div id="candy-container">
+  <div class="input-field inline">
+    <label for="candy">Enter Pidgey candy</label>
+    <input type="number" min="0" id="candy">
+  </div>
+</div>
+
+<p>
+  <input type="checkbox" id="double">
+  <label for="double">Double candy event</label>
+</p>
+
+<p>
+  <input type="checkbox" id="transfer" checked>
+  <label for="transfer">Transfer after evolving</label>
+</p>
+
+<div id="output-container" hidden>
+  <hr>
+
+  <div id="outputs">
+    <p id="needed-container">
+      <label for="needed">Pidgeys needed</label>
+      <output id="needed"></output>
+    </p>
+
+    <p id="leftover-container">
+      <label for="leftover">Leftover candy</label>
+      <output id="leftover"></output>
+    </p>
+  </div>
+</div>
+
+<script>
+"use strict";
+(function () {
+  const CANDY_TO_EVOLVE = 12;
+  const CANDY_FROM_EVOLVING = 1;
+  const CANDY_FROM_TRANSFERRING = 1;
+
+  const candyEl = document.querySelector("#candy");
+  const candyLabelEl = document.querySelector("[for=\"candy\"]");
+  const doubleEl = document.querySelector("#double");
+  const transferEl = document.querySelector("#transfer");
+  const neededEl = document.querySelector("#needed");
+  const leftoverEl = document.querySelector("#leftover");
+  const outputContainerEl = document.querySelector("#output-container");
+
+  candyEl.addEventListener("input", recalculate);
+  doubleEl.addEventListener("change", recalculate);
+  transferEl.addEventListener("change", recalculate);
+
+  function recalculate() {
+    let pidgeysEvolved = 0;
+    let candyLeft = candyEl.valueAsNumber;
+    let doTransfer = transferEl.checked;
+    const doubleMultiplier = doubleEl.checked ? 2 : 1;
+
+    if (Number.isNaN(candyLeft)) {
+      outputContainerEl.hidden = true;
+      return;
+    }
+
+    outputContainerEl.hidden = false;
+
+    while (candyLeft >= CANDY_TO_EVOLVE) {
+      ++pidgeysEvolved;
+
+      candyLeft -= CANDY_TO_EVOLVE;
+      candyLeft += CANDY_FROM_EVOLVING * doubleMultiplier;
+      if (doTransfer) {
+        candyLeft += CANDY_FROM_TRANSFERRING * doubleMultiplier;
+      }
+    }
+
+    neededEl.value = pidgeysEvolved;
+    leftoverEl.value = candyLeft;
+  }
+
+  // Materialize shim instead of pulling in all the JavaScript
+  candyEl.addEventListener("focusin", () => candyLabelEl.classList.add("active"));
+  candyEl.addEventListener("focusout", () => {
+    if (Number.isNaN(candyEl.valueAsNumber)) {
+      candyLabelEl.classList.remove("active");
+    }
+  });
+
+  if (navigator.serviceWorker) {
+    navigator.serviceWorker.register("service-worker.js");
+  }
+}());
+</script>
