@@ -1,0 +1,19 @@
+{
+  "name": "pidgey-calc",
+  "version": "1.0.0",
+  "description": "Calculates how many Pidgeys you need for your next evolution spree in Pokémon Go.",
+  "repository": "domenic/pidgey-calc",
+  "keywords": [
+    "pokemon go",
+    "pokemon",
+    "pidgey"
+  ],
+  "author": "Domenic Denicola <d@domenic.me> (https://domenic.me/)",
+  "license": "MIT",
+  "scripts": {
+    "start": "serve --cors ./www"
+  },
+  "dependencies": {
+    "serve": "^6.0.1"
+  }
+}
