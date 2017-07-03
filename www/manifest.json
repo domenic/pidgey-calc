@@ -1,7 +1,7 @@
 {
   "name": "Pidgey Calculator",
   "short_name": "Pidgey Calc",
-  "description": "Calculates how many Pidgeys you need for your next evolution spree.",
+  "description": "Calculates how many Pidgeys you need for your next evolution spree in Pokémon Go.",
   "display": "standalone",
   "background_color": "white",
   "theme_color": "rgb(221, 158, 105)",
