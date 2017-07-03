@@ -47,45 +47,44 @@ html {
   --body-width: calc(100% - 2 * var(--side-margin));
   --body-max-width: 600px;
 
-  background: url(icons/background.svg);
-  background-size: contain;
-  width: 100vw;
-  height: 100vh;
-  background-repeat: no-repeat;
-  background-position: center calc(var(--header-height) + 80px);
   font-family: "Roboto", sans-serif;
   margin: 0;
   padding: 0;
   font-size: 20px;
 }
 
-body {
-  margin: 0 auto;
-  padding: 0;
-  width: var(--body-width);
-  max-width: var(--body-max-width);
-  margin-top: calc(var(--header-height) + 40px);
-}
-
 @media screen and (max-height: 569px) {
   html {
     font-size: 18px;
   }
-  body {
-    margin-top: calc(var(--header-height) + 10px);
-  }
 }
 
-label {
-  display: block;
+body {
+  padding: 0;
+
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+
+  background: url(icons/background.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+main, footer {
+  width: var(--body-width);
+  max-width: var(--body-max-width);
+  margin: 0 auto;
+}
+
+main {
+  flex: 1;
 }
 
 header {
   height: var(--header-height);
   width: 100vw;
-  position: absolute;
-  top: 0;
-  left: 0;
   background-color: var(--theme-color);
 }
 
@@ -96,6 +95,7 @@ header > h1 {
   color: white;
   font-size: 40px;
   text-align: center;
+  white-space: nowrap;
 
   margin: 0 auto;
   width: var(--body-width);
@@ -106,6 +106,23 @@ header > h1 {
   header > h1 {
     font-size: 30px;
   }
+}
+
+footer {
+  font-size: xx-small;
+  width: var(--body-width);
+  max-width: var(--body-max-width);
+  border-top: 1px solid var(--theme-color);
+  margin-top: 10px;
+}
+
+label {
+  display: block;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--theme-color);
 }
 
 #candy-container {
@@ -140,73 +157,61 @@ header > h1 {
   text-align: center;
   font-size: larger;
 }
-
-footer {
-  font-size: xx-small;
-  position: absolute;
-  bottom: 0;
-  width: var(--body-width);
-  max-width: var(--body-max-width);
-  border-top: 1px solid var(--theme-color);
-}
-
-hr {
-  border: none;
-  border-top: 1px solid var(--theme-color);
-}
 </style>
 
 <header>
-  <h1>Pidgey&nbsp;Calculator</h1>
+  <h1>Pidgey Calculator</h1>
 </header>
 
-<div id="candy-container">
-  <div class="input-field inline">
-    <label for="candy">Enter Pidgey candy</label>
-    <input type="number" min="0" id="candy">
+<main>
+  <div id="candy-container">
+    <div class="input-field inline">
+      <label for="candy">Enter Pidgey candy</label>
+      <input type="number" min="0" id="candy">
+    </div>
   </div>
-</div>
 
-<p>
-  <input type="checkbox" id="transfer" checked>
-  <label for="transfer">Transfer after evolving</label>
-</p>
+  <p>
+    <input type="checkbox" id="transfer" checked>
+    <label for="transfer">Transfer after evolving</label>
+  </p>
 
-<p>
-  <input type="checkbox" id="lucky-egg" checked>
-  <label for="lucky-egg">Lucky egg</label>
-</p>
+  <p>
+    <input type="checkbox" id="lucky-egg" checked>
+    <label for="lucky-egg">Lucky egg</label>
+  </p>
 
-<p>
-  <input type="checkbox" id="double-xp" checked>
-  <label for="double-xp">Double XP event</label>
-</p>
+  <p>
+    <input type="checkbox" id="double-xp" checked>
+    <label for="double-xp">Double XP event</label>
+  </p>
 
-<p>
-  <input type="checkbox" id="double-candy">
-  <label for="double-candy">Double candy event</label>
-</p>
+  <p>
+    <input type="checkbox" id="double-candy">
+    <label for="double-candy">Double candy event</label>
+  </p>
 
-<div id="output-container" hidden>
-  <hr>
+  <div id="output-container" hidden>
+    <hr>
 
-  <div id="outputs">
-    <p id="needed-container">
-      <label for="needed">Pidgeys needed</label>
-      <output id="needed"></output>
-    </p>
+    <div id="outputs">
+      <p id="needed-container">
+        <label for="needed">Pidgeys needed</label>
+        <output id="needed"></output>
+      </p>
 
-    <p id="leftover-container">
-      <label for="leftover">Leftover candy</label>
-      <output id="leftover"></output>
-    </p>
+      <p id="leftover-container">
+        <label for="leftover">Leftover candy</label>
+        <output id="leftover"></output>
+      </p>
 
-    <p id="xp-container">
-      <label for="xp">XP gain</label>
-      <output id="xp"></output>
-    </p>
+      <p id="xp-container">
+        <label for="xp">XP gain</label>
+        <output id="xp"></output>
+      </p>
+    </div>
   </div>
-</div>
+</main>
 
 <footer>
   <p>
