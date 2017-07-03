@@ -64,7 +64,16 @@ body {
   padding: 0;
   width: var(--body-width);
   max-width: var(--body-max-width);
-  margin-top: calc(var(--header-height) + 50px);
+  margin-top: calc(var(--header-height) + 40px);
+}
+
+@media screen and (max-height: 569px) {
+  html {
+    font-size: 18px;
+  }
+  body {
+    margin-top: calc(var(--header-height) + 10px);
+  }
 }
 
 label {
@@ -85,13 +94,19 @@ header > h1 {
   line-height: var(--header-height);
   font-weight: normal;
   color: white;
-  font-size: 2.1rem;
+  font-size: 40px;
+  text-align: center;
 
   margin: 0 auto;
   width: var(--body-width);
   max-width: var(--body-max-width);
 }
 
+@media screen and (max-width: 321px) {
+  header > h1 {
+    font-size: 30px;
+  }
+}
 
 #candy-container {
   text-align: center;
@@ -196,7 +211,7 @@ hr {
 <footer>
   <p>
     Made by Domenic.<br>
-    See source, suggest improvements, and report issues <a href="https://github.com/domenic/pidgey-calc">on GitHub</a>.
+    See source and report issues <a href="https://github.com/domenic/pidgey-calc">on GitHub</a>.
   </p>
 
   <p>Go Team Instinct!</p>
