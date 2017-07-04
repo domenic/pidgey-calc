@@ -1,11 +1,12 @@
 "use strict";
 
-const cacheKey = "v3";
+const cacheKey = "v4";
 const toCache = [
   "/",
-  "/icons/pidgey.svg",
+  "/icons/background.svg",
   "https://fonts.googleapis.com/css?family=Roboto",
-  "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css"
+  "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css",
+  "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/fonts/roboto/Roboto-Regular.woff2"
 ];
 
 self.oninstall = e => {
